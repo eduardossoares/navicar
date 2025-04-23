@@ -59,6 +59,7 @@ export default function AuthProvider({ children }: AuthContextProviderProps) {
         email,
         password,
       });
+      await signIn({ email, password });
     } catch (error: any) {
       console.log("Erro ao criar e logar usuário");
       throw new Error(error);

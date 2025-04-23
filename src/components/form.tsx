@@ -50,7 +50,13 @@ export default function Form({ type }: FormProps) {
     try {
       await createUser(data);
     } catch {
-      toast.error("Erro ao criar e logar usuário");
+      toast.warning("Erro ao criar usuário.", {
+        style: {
+          backgroundColor: "#FF5555",
+          color: "#FFF",
+        },
+        position: "top-right",
+      });
     }
   };
 
@@ -84,7 +90,7 @@ export default function Form({ type }: FormProps) {
               {...register("email")}
             />
             {errors && (
-              <p className="text-red-500 text-sm">{errors.email?.message}</p>
+              <p className="text-red-500 text-sm font-semibold">{errors.email?.message}</p>
             )}
           </div>
         </motion.div>
@@ -117,7 +123,7 @@ export default function Form({ type }: FormProps) {
               )}
             </Button>
             {errors && (
-              <p className="text-red-500 text-sm">{errors.password?.message}</p>
+              <p className="text-red-500 text-sm font-semibold">{errors.password?.message}</p>
             )}
           </div>
         </motion.div>
@@ -133,8 +139,8 @@ export default function Form({ type }: FormProps) {
         </motion.div>
 
         {showSignInError && (
-          <p className="text-red-500 text-sm text-center">
-            Email ou senha inválidos
+          <p className="text-red-500 text-sm text-center font-semibold">
+            Email ou senha inválidos.
           </p>
         )}
       </form>

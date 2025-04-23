@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -86,7 +87,6 @@ export default function AuthCard() {
                 toast(`Autenticação via redes sociais está desativada!`, {
                   position: "top-center",
                   closeButton: true,
-
                 });
               }}
               key={index}
@@ -111,12 +111,14 @@ export default function AuthCard() {
         })}
       </div>
 
-      <Button
-        variant={"ghost"}
-        className="cursor-pointer transition-transform hover:scale-105 duration-500 text-gray-500 hover:text-gray-800"
-      >
-        Pular login
-      </Button>
+      <Link href="/">
+        <Button
+          variant={"ghost"}
+          className="cursor-pointer transition-transform hover:scale-105 duration-500 text-gray-500 hover:text-gray-800"
+        >
+          Pular login
+        </Button>
+      </Link>
     </motion.div>
   );
 }
