@@ -34,7 +34,7 @@ export default function AuthCard() {
       gap-y-4 rounded-xl shadow"
     >
       <div className="flex flex-col items-center gap-y-2">
-        <Image src="/logo.svg" alt="logo" width={160} height={160} />
+        <Image src="/logo.svg" alt="logo" width={160} height={160} priority />
         <p className="text-sm font-light">Encontre seu carro com facilidade</p>
       </div>
 
