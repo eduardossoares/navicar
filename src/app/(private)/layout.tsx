@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import { Toaster } from "sonner";
+import "../globals.css";
 import AuthProvider from "@/contexts/AuthContext";
+import DashboardSidebar from "@/components/dashboard-sidebar";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -21,9 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.variable} antialiased`}>
+      <body className={`${inter.variable} antialiased flex flex-row`}>
         <AuthProvider>
-          <Toaster />
+          <DashboardSidebar />
           {children}
         </AuthProvider>
       </body>

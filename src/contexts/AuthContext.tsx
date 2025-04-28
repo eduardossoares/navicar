@@ -5,7 +5,6 @@ import { api } from "@/services/api";
 import Error from "next/error";
 import { setCookie, destroyCookie, parseCookies } from "nookies";
 import { useRouter } from "next/navigation";
-import constants from "constants";
 
 interface AuthContextProviderProps {
   children: ReactNode;
@@ -15,7 +14,8 @@ interface AuthContextData {
   createUser: ({ email, password }: AuthProps) => void;
   signIn: ({ email, password }: AuthProps) => void;
   signOut: () => void;
-  user: UserProps | undefined;
+  user: UserProps | null;
+  isLoading: boolean;
 }
 
 type UserProps = {
@@ -31,6 +31,11 @@ export type AuthProps = {
 export const AuthContext = createContext({} as AuthContextData);
 
 export default function AuthProvider({ children }: AuthContextProviderProps) {
+  const [user, setUser] = useState<UserProps | null>(null);
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const { "@nextauth.token": token } = parseCookies();
+
   useEffect(() => {
     const { "@nextauth.token": token } = parseCookies();
     if (token) {
@@ -46,13 +51,19 @@ export default function AuthProvider({ children }: AuthContextProviderProps) {
         })
         .catch((error) => {
           console.log("Erro ao setar usuário");
+          setUser(null);
+          destroyCookie(null, "@nextauth.token");
           throw new Error(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
+    } else {
+      setUser(null);
+      setIsLoading(false);
     }
   }, []);
 
-  const [user, setUser] = useState<UserProps>();
-  const router = useRouter();
   const createUser = async ({ email, password }: AuthProps) => {
     try {
       await api.post("/users", {
@@ -88,18 +99,20 @@ export default function AuthProvider({ children }: AuthContextProviderProps) {
       throw new Error(error);
     }
   };
-  const signOut = async () => {
+  const signOut = () => {
     try {
       destroyCookie(null, "@nextauth.token");
-      setUser(undefined);
-      router.push("/auth");
+      setUser(null);
+      window.location.href = "/auth?logout=true";
     } catch {
       console.log("Erro ao deslogar");
     }
   };
 
   return (
-    <AuthContext.Provider value={{ signIn, signOut, user, createUser }}>
+    <AuthContext.Provider
+      value={{ signIn, signOut, user, createUser, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

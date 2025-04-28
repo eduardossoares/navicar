@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import logoBlack from "../../public/logo.svg";
 
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
@@ -35,7 +36,7 @@ export default function AuthCard() {
       gap-y-4 rounded-xl shadow"
     >
       <div className="flex flex-col items-center gap-y-2">
-        <Image src="/logo.svg" alt="logo" width={160} height={160} priority />
+        <Image src={logoBlack} alt="logo" width={160} height={160} />
         <p className="text-sm font-light">Encontre seu carro com facilidade</p>
       </div>
 
@@ -110,15 +111,6 @@ export default function AuthCard() {
           );
         })}
       </div>
-
-      <Link href="/">
-        <Button
-          variant={"ghost"}
-          className="cursor-pointer transition-transform hover:scale-105 duration-500 text-gray-500 hover:text-gray-800"
-        >
-          Pular login
-        </Button>
-      </Link>
     </motion.div>
   );
 }
