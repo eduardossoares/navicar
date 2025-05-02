@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Card, CardContent } from "./ui/card";
-import car from "../../public/car.jpg";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 import { VehicleProps } from "@/@types/Vehicle";
 
@@ -31,8 +31,8 @@ export default function VehicleCard({
   };
 
   return (
-    <Card className="overflow-hidden p-0">
-      <div className="relative h-48 w-full">
+    <Card className="overflow-hidden p-0 shadow-none rounded-sm">
+      <div className={`relative w-full ${milage ? "h-48" : "h-28"}`}>
         <Image className="object-cover" src={images[0]} alt="Car" fill />
       </div>
       <CardContent className="pb-6 flex flex-col gap-y-2">
@@ -43,22 +43,37 @@ export default function VehicleCard({
           <span className="text-sm text-zinc-500">{year}</span>
         </div>
 
-        <span className="text-sm text-zinc-500">{city}</span>
+        {city && <span className="text-sm text-zinc-500">{city}</span>}
 
         <div className="flex items-center justify-between">
           <span className="text-lg font-bold">{formatCurrency(price)}</span>
-          <span className="text-sm text-zinc-500">
-            {formatMilage(milage)} km
-          </span>
+          {!milage && (
+            <Link
+              href={`/vehicles/${id}`}
+              className="flex items-center justify-end text-blue-500 gap-x-1.5
+          cursor-pointer text-sm hover:text-blue-700 transition-colors duration-300"
+            >
+              <span className="hover:underline">Veja mais detalhes</span>
+              <ArrowRight size={16} />
+            </Link>
+          )}
+          {milage && (
+            <span className="text-sm text-zinc-500">
+              {formatMilage(milage)} km
+            </span>
+          )}
         </div>
 
-        <div
-          className="flex items-center justify-end text-blue-500 gap-x-1.5
-        cursor-pointer text-sm hover:text-blue-700 transition-colors duration-300"
-        >
-          <span className="hover:underline">Veja mais detalhes</span>
-          <ArrowRight size={16} />
-        </div>
+        {milage && (
+          <Link
+            href={`/vehicles/${id}`}
+            className="flex items-center justify-end text-blue-500 gap-x-1.5
+          cursor-pointer text-sm hover:text-blue-700 transition-colors duration-300"
+          >
+            <span className="hover:underline">Veja mais detalhes</span>
+            <ArrowRight size={16} />
+          </Link>
+        )}
       </CardContent>
     </Card>
   );

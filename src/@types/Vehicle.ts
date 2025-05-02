@@ -4,13 +4,13 @@ export interface VehicleProps {
   model: string;
   year: string;
   price: string;
-  phone: string;
-  createdAt: string;
-  updatedAt: string;
-  city: string;
-  ownerId: string;
-  color: string;
-  description: string;
-  milage: string;
+  phone?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  city?: string;
+  ownerId?: string;
+  color?: string;
+  description?: string;
+  milage?: string;
   images: string[];
 }

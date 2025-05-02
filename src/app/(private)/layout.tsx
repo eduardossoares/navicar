@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import AuthProvider from "@/contexts/AuthContext";
 import DashboardSidebar from "@/components/dashboard-sidebar";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased flex flex-row`}>
         <AuthProvider>
           <DashboardSidebar />
+          <Toaster />
           {children}
         </AuthProvider>
       </body>

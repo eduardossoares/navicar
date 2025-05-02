@@ -18,8 +18,8 @@ import { LogOut, Menu, FileText, Search, X } from "lucide-react";
 
 import NavItem from "./nav-item";
 import { Button } from "./ui/button";
-import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+
 
 export default function DashboardSidebar() {
   const pathName = usePathname();
@@ -51,7 +51,7 @@ export default function DashboardSidebar() {
           Explorar
         </NavItem>
         <NavItem
-          href="/users/me"
+          href={`/user/vehicles`}
           icon={<FileText className="mr-2 h-5 w-5" />}
           active={currentPage === "anuncios"}
         >
