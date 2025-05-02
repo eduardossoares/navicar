@@ -33,7 +33,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="p-4 w-full bg-zinc-100/60">
+    <div className="p-4 w-full bg-zinc-100/60 md:pl-[340px]">
       <div className="2xl:px-48 2xl:py-2 space-y-4">
         <div className="max-lg:gap-y-4 flex flex-col lg:flex-row lg:w-full lg:items-center justify-between">
           <Return brand={vehicle?.brand!} model={vehicle?.model!} />
@@ -50,7 +50,7 @@ export default function Page() {
               milage={vehicle?.milage!}
               description={vehicle?.description!}
             />
-            <SimilarVehicles />
+            <SimilarVehicles id={vehicleId} />
           </div>
           <div className="lg:w-[35%] space-y-4">
             <Contact

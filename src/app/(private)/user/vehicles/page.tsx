@@ -49,7 +49,7 @@ export default function Page() {
   }, [search]);
 
   return (
-    <div className="p-4 md:p-8 w-full space-y-4 bg-zinc-100/60">
+    <div className="p-4 md:p-8 w-full space-y-4 md:pl-[340px]">
       <div>
         <h1 className="text-xl md:text-2xl font-bold md:w-[60%]">
           Seus anúncios

@@ -113,7 +113,7 @@ export default function DashboardSidebar() {
       </div>
 
       {/* Desktop Sidebar */}
-      <nav className="hidden md:flex h-screen bg-[#1c1d1f] w-96 flex-col space-y-12 py-10">
+      <nav className="fixed hidden md:flex h-screen bg-[#1c1d1f] w-80 flex-col space-y-12 py-10">
         <div className="flex flex-col items-center justifya-center">
           <Image src={whiteLogo} alt="logo" width={120} height={120} />
         </div>

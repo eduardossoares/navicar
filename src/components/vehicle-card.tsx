@@ -50,11 +50,9 @@ export default function VehicleCard({
           {!milage && (
             <Link
               href={`/vehicles/${id}`}
-              className="flex items-center justify-end text-blue-500 gap-x-1.5
-          cursor-pointer text-sm hover:text-blue-700 transition-colors duration-300"
+              className="text-blue-500 cursor-pointer text-sm hover:text-blue-700 transition-colors duration-300"
             >
               <span className="hover:underline">Veja mais detalhes</span>
-              <ArrowRight size={16} />
             </Link>
           )}
           {milage && (
