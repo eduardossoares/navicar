@@ -85,6 +85,7 @@ export default function Page() {
           filteredVehicles.map((vehicle) => (
             <div key={vehicle.id}>
               <VehicleCard
+                isCarOwner={true}
                 id={vehicle.id}
                 model={vehicle.model}
                 brand={vehicle.brand}
@@ -107,6 +108,7 @@ export default function Page() {
           vehicles.map((vehicle) => (
             <div key={vehicle.id}>
               <VehicleCard
+                isCarOwner={true}
                 id={vehicle.id}
                 model={vehicle.model}
                 brand={vehicle.brand}

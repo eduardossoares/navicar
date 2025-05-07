@@ -6,7 +6,6 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
 import { useAuth } from "@/hooks/useAuth";
-import { AuthProps } from "@/contexts/AuthContext";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,7 +27,7 @@ export default function Form({ type }: FormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showSignInError, setShowSignInError] = useState(false);
 
-  const { createUser, signIn, user } = useAuth();
+  const { createUser, signIn } = useAuth();
   const {
     register,
     handleSubmit,

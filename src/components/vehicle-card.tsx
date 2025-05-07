@@ -4,6 +4,12 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { VehicleProps } from "@/@types/Vehicle";
+import { Button } from "./ui/button";
+import { Trash, Edit } from "lucide-react";
+
+interface isCarOwner extends VehicleProps {
+  isCarOwner?: boolean;
+}
 
 export default function VehicleCard({
   id,
@@ -14,7 +20,8 @@ export default function VehicleCard({
   city,
   milage,
   images,
-}: VehicleProps) {
+  isCarOwner = false,
+}: isCarOwner) {
   const formatCurrency = (value: string) => {
     const valueAsNumber = Number(value);
     return valueAsNumber.toLocaleString("pt-BR", {
@@ -23,6 +30,16 @@ export default function VehicleCard({
     });
   };
 
+  /*************  ✨ Windsurf Command ⭐  *************/
+  /**
+   * Converts a string representing a number into a localized string
+   * with decimal formatting for Brazilian Portuguese.
+   *
+   * @param value - The string representation of a number to be formatted.
+   * @returns The formatted string with Brazilian Portuguese decimal style.
+   */
+
+  /*******  b2b2f6a7-59c5-4264-b964-8dc09b177951  *******/
   const formatMilage = (value: string) => {
     const valueAsNumber = Number(value);
     return valueAsNumber.toLocaleString("pt-BR", {
@@ -62,7 +79,7 @@ export default function VehicleCard({
           )}
         </div>
 
-        {milage && (
+        {milage && !isCarOwner && (
           <Link
             href={`/vehicles/${id}`}
             className="flex items-center justify-end text-blue-500 gap-x-1.5
@@ -71,6 +88,25 @@ export default function VehicleCard({
             <span className="hover:underline">Veja mais detalhes</span>
             <ArrowRight size={16} />
           </Link>
+        )}
+
+        {isCarOwner && (
+          <div className="space-x-2 w-full flex">
+            <Button
+              variant={"outline"}
+              className="flex-1 space-x-1 rounded-sm cursor-pointer"
+            >
+              <Edit color="black" />
+              <span>Editar</span>
+            </Button>
+            <Button
+              variant={"destructive"}
+              className="flex-1 text-white rounded-sm cursor-pointer"
+            >
+              <Trash />
+              <span>Apagar</span>
+            </Button>
+          </div>
         )}
       </CardContent>
     </Card>

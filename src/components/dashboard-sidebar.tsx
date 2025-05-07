@@ -20,7 +20,6 @@ import NavItem from "./nav-item";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 
-
 export default function DashboardSidebar() {
   const pathName = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -31,14 +30,18 @@ export default function DashboardSidebar() {
   useEffect(() => {
     if (pathName === "/") {
       setCurrentPage("explore");
-    } else {
+    } else if (pathName === "/user/vehicles") {
       setCurrentPage("anuncios");
+    } else {
+      setCurrentPage("");
     }
   }, [pathName]);
 
   const handleSignOut = async () => {
     signOut();
   };
+
+  console.log(user);
 
   const NavItems = () => (
     <div className="flex flex-col justify-between h-full">
@@ -58,7 +61,7 @@ export default function DashboardSidebar() {
           Seus anúncios
         </NavItem>
       </div>
-      <div className={cn("px-4", isLoading ? "hidden" : "flex")}>
+      <div className={cn("px-4", isLoading ? "hidden" : "block")}>
         {user ? (
           <NavItem
             onClick={handleSignOut}

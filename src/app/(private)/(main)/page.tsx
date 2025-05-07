@@ -11,11 +11,14 @@ import { useEffect, useState } from "react";
 
 import { VehicleProps } from "@/@types/Vehicle";
 
+import VehicleFormModal from "@/components/vehicle-form-modal";
+
 export default function Home() {
   const { user } = useAuth();
   const [vehicles, setVehicles] = useState<VehicleProps[]>([]);
   const [filteredVehicles, setFilteredVehicles] = useState<VehicleProps[]>([]);
   const [search, setSearch] = useState("");
+  const [isModalOpened, setIsModalOpened] = useState(false);
 
   useEffect(() => {
     const getVehicles = async () => {
@@ -58,6 +61,7 @@ export default function Home() {
           className="bg-blue-500 md:absolute md:right-4 md:top-4 w-full md:w-auto
       transition-colors cursor-pointer duration-300 ease-in
       hover:bg-blue-500/90"
+          onClick={() => setIsModalOpened(true)}
         >
           <Plus />
           Anunciar Veículo
@@ -95,6 +99,7 @@ export default function Home() {
               />
             </div>
           ))}
+
         {search.length < 1 &&
           vehicles.map((vehicle) => (
             <div key={vehicle.id}>
@@ -117,6 +122,11 @@ export default function Home() {
             </div>
           ))}
       </div>
+
+      <VehicleFormModal
+        isOpen={isModalOpened}
+        onClose={() => setIsModalOpened(false)}
+      />
     </div>
   );
 }

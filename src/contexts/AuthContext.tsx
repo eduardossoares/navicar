@@ -34,7 +34,6 @@ export default function AuthProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<UserProps | null>(null);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-  const { "@nextauth.token": token } = parseCookies();
 
   useEffect(() => {
     const { "@nextauth.token": token } = parseCookies();
@@ -43,11 +42,11 @@ export default function AuthProvider({ children }: AuthContextProviderProps) {
         .get("/me")
         .then((response) => {
           const { id, email } = response.data;
-          const user: UserProps = {
+          const userData: UserProps = {
             id,
             email,
           };
-          setUser(user);
+          setUser(userData);
         })
         .catch((error) => {
           console.log("Erro ao setar usuário");
@@ -58,9 +57,6 @@ export default function AuthProvider({ children }: AuthContextProviderProps) {
         .finally(() => {
           setIsLoading(false);
         });
-    } else {
-      setUser(null);
-      setIsLoading(false);
     }
   }, []);
 
@@ -76,18 +72,18 @@ export default function AuthProvider({ children }: AuthContextProviderProps) {
       throw new Error(error);
     }
   };
-  const signIn = async ({ email, password }: AuthProps): Promise<void> => {
+  const signIn = async ({ email, password }: AuthProps): Promise<void> => {''
     try {
       const response = await api.post("/login", {
         email,
         password,
       });
       const { id, token } = response.data;
-      const user: UserProps = {
+      const userData: UserProps = {
         id,
         email,
       };
-      setUser(user);
+      setUser(userData);
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
       setCookie(null, "@nextauth.token", token, {
         maxAge: 60 * 60 * 24 * 30,

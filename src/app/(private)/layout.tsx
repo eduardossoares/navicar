@@ -22,11 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.variable} antialiased flex flex-row min-h-screen`}>
-        <DashboardSidebar />
+      <body
+        className={`${inter.variable} antialiased flex flex-row min-h-screen`}
+      >
         <AuthProvider>
+          <DashboardSidebar />
           <Toaster />
-
           {children}
         </AuthProvider>
       </body>
