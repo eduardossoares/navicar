@@ -9,6 +9,8 @@ import { Trash, Edit } from "lucide-react";
 
 interface isCarOwner extends VehicleProps {
   isCarOwner?: boolean;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 export default function VehicleCard({
@@ -21,6 +23,8 @@ export default function VehicleCard({
   milage,
   images,
   isCarOwner = false,
+  onDelete,
+  onEdit,
 }: isCarOwner) {
   const formatCurrency = (value: string) => {
     const valueAsNumber = Number(value);
@@ -53,7 +57,7 @@ export default function VehicleCard({
         <Image className="object-cover" src={images[0]} alt="Car" fill />
       </div>
       <CardContent className="pb-6 flex flex-col gap-y-2">
-        <div className="-space-y-2">
+        <div className="-space-y-1">
           <h3 className="font-bold">
             {brand} {model}
           </h3>
@@ -94,14 +98,16 @@ export default function VehicleCard({
           <div className="space-x-2 w-full flex">
             <Button
               variant={"outline"}
-              className="flex-1 space-x-1 rounded-sm cursor-pointer"
+              className="flex-1 space-x-1 rounded-sm cursor-pointer shadow-none"
+              onClick={onEdit}
             >
               <Edit color="black" />
               <span>Editar</span>
             </Button>
             <Button
-              variant={"destructive"}
-              className="flex-1 text-white rounded-sm cursor-pointer"
+              onClick={onDelete}
+              variant={"outline"}
+              className="flex-1 text-red-500 rounded-sm cursor-pointer shadow-none"
             >
               <Trash />
               <span>Apagar</span>

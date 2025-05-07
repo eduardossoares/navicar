@@ -19,6 +19,7 @@ export default function Home() {
   const [filteredVehicles, setFilteredVehicles] = useState<VehicleProps[]>([]);
   const [search, setSearch] = useState("");
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getVehicles = async () => {
@@ -28,6 +29,8 @@ export default function Home() {
         setVehicles(data);
       } catch (error) {
         console.log(`Erro ao buscar veículos: ${error}`);
+      } finally {
+        setIsLoading(false);
       }
     };
     getVehicles();
@@ -77,51 +80,55 @@ export default function Home() {
         />
       </div>
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {search.length > 0 &&
-          filteredVehicles.map((vehicle) => (
-            <div key={vehicle.id}>
-              <VehicleCard
-                id={vehicle.id}
-                model={vehicle.model}
-                brand={vehicle.brand}
-                year={vehicle.year}
-                price={vehicle.price}
-                phone={vehicle.phone}
-                createdAt={vehicle.createdAt}
-                updatedAt={vehicle.updatedAt}
-                city={vehicle.city}
-                ownerId={vehicle.ownerId}
-                color={vehicle.color}
-                description={vehicle.description}
-                milage={vehicle.milage}
-                images={vehicle.images}
-              />
-            </div>
-          ))}
+      {isLoading ? (
+        <p className="text-zinc-400">Carregando veículos...</p>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {search.length > 0 &&
+            filteredVehicles.map((vehicle) => (
+              <div key={vehicle.id}>
+                <VehicleCard
+                  id={vehicle.id}
+                  model={vehicle.model}
+                  brand={vehicle.brand}
+                  year={vehicle.year}
+                  price={vehicle.price}
+                  phone={vehicle.phone}
+                  createdAt={vehicle.createdAt}
+                  updatedAt={vehicle.updatedAt}
+                  city={vehicle.city}
+                  ownerId={vehicle.ownerId}
+                  color={vehicle.color}
+                  description={vehicle.description}
+                  milage={vehicle.milage}
+                  images={vehicle.images}
+                />
+              </div>
+            ))}
 
-        {search.length < 1 &&
-          vehicles.map((vehicle) => (
-            <div key={vehicle.id}>
-              <VehicleCard
-                id={vehicle.id}
-                model={vehicle.model}
-                brand={vehicle.brand}
-                year={vehicle.year}
-                price={vehicle.price}
-                phone={vehicle.phone}
-                createdAt={vehicle.createdAt}
-                updatedAt={vehicle.updatedAt}
-                city={vehicle.city}
-                ownerId={vehicle.ownerId}
-                color={vehicle.color}
-                description={vehicle.description}
-                milage={vehicle.milage}
-                images={vehicle.images}
-              />
-            </div>
-          ))}
-      </div>
+          {search.length < 1 &&
+            vehicles.map((vehicle) => (
+              <div key={vehicle.id}>
+                <VehicleCard
+                  id={vehicle.id}
+                  model={vehicle.model}
+                  brand={vehicle.brand}
+                  year={vehicle.year}
+                  price={vehicle.price}
+                  phone={vehicle.phone}
+                  createdAt={vehicle.createdAt}
+                  updatedAt={vehicle.updatedAt}
+                  city={vehicle.city}
+                  ownerId={vehicle.ownerId}
+                  color={vehicle.color}
+                  description={vehicle.description}
+                  milage={vehicle.milage}
+                  images={vehicle.images}
+                />
+              </div>
+            ))}
+        </div>
+      )}
 
       <VehicleFormModal
         isOpen={isModalOpened}
