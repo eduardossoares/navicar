@@ -52,7 +52,6 @@ export default function SimilarVehicles({ id }: SimilarVehiclesProps) {
           </div>
         </motion.div>
       )}
-      ;
     </>
   );
 }
