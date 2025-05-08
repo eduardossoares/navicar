@@ -7,13 +7,13 @@ import { useRouter } from "next/router";
 const setupAPIClient = () => {
   let cookies = parseCookies();
   const token = cookies["@nextauth.token"];
-  const baseURL = process.env.NEXT_PUBLIC_API_URL;
-  if (!baseURL) {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  if (!API_URL) {
     throw new Error("BASE URL não encontrada");
   }
 
   const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    baseURL: API_URL,
     headers: {
       Authorization: `Bearer ${token}`,
     },

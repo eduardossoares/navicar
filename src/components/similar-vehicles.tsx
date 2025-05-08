@@ -29,26 +29,30 @@ export default function SimilarVehicles({ id }: SimilarVehiclesProps) {
     };
     getVehicles();
   }, [id]);
-  {
-    vehicles && (
-      <motion.div className="w-full space-y-2">
-        <h2 className="font-semibold text-zinc-700 text-lg">
-          Veículos Similares
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2">
-          {vehicles.map((vehicle) => (
-            <VehicleCard
-              brand={vehicle.brand}
-              model={vehicle.model}
-              key={vehicle.id}
-              images={vehicle.images}
-              price={vehicle.price}
-              id={vehicle.id}
-              year={vehicle.year}
-            />
-          ))}
-        </div>
-      </motion.div>
-    );
-  }
+
+  return (
+    <>
+      {vehicles && (
+        <motion.div className="w-full space-y-2">
+          <h2 className="font-semibold text-zinc-700 text-lg">
+            Veículos Similares
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2">
+            {vehicles.map((vehicle) => (
+              <VehicleCard
+                brand={vehicle.brand}
+                model={vehicle.model}
+                key={vehicle.id}
+                images={vehicle.images}
+                price={vehicle.price}
+                id={vehicle.id}
+                year={vehicle.year}
+              />
+            ))}
+          </div>
+        </motion.div>
+      )}
+      ;
+    </>
+  );
 }
