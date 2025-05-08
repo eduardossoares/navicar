@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Navicar Frontend 🚗
 
-## Getting Started
+Um frontend dinâmico para um marketplace de carros, construído com **Next.js**, **TypeScript** e **Tailwind CSS**. O Navicar oferece uma experiência responsiva e visualmente atraente, permitindo que usuários explorem anúncios, gerenciem suas contas e cadastrem veículos, com proteção de rotas sensíveis via middleware.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-14-black) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3-38B2AC)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Sobre o Projeto
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O Navicar Frontend é a vitrine de um marketplace de carros, integrando-se perfeitamente à sua API via **Axios**. Com **Tailwind CSS** e **ShadcnUI**, entrega um design moderno e fluido, enriquecido por animações suaves com **Framer Motion**. O **Context API** gerencia o estado, enquanto **React Hook Form** com **Zod** garante formulários robustos. Middleware de autenticação protege áreas sensíveis, como gerenciamento de anúncios.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Funcionalidades Principais
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Catálogo Interativo**: Navegue por carros disponíveis com uma interface intuitiva.
+- **Gestão de Anúncios**: Crie e gerencie seus próprios anúncios de veículos.
+- **Autenticação Segura**: Faça login para acessar áreas protegidas.
+- **Busca Rápida**: Encontre carros específicos com facilidade.
+- **Design Animado**: Animações fluidas com Framer Motion para uma experiência premium.
 
-## Learn More
+## Tecnologias que Dão Vida ao Frontend
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js**: Estrutura otimizada com renderização dinâmica.
+- **TypeScript**: Código seguro e tipado.
+- **Tailwind CSS & ShadcnUI**: Estilização moderna e componentes prontos.
+- **Framer Motion**: Animações elegantes.
+- **Axios**: Integração com a API.
+- **Context API**: Gerenciamento de estado leve.
+- **React Hook Form & Zod**: Validação de formulários confiável.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Decisões Técnicas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Escolhi **Next.js** para performance e suporte a SEO, ideal para um marketplace.
+- Usei **Framer Motion** para animações sutis, elevando a experiência do usuário.
+- **Context API** foi preferido a Redux para manter o estado simples e eficiente.
+- Implementei middleware de autenticação para proteger rotas, garantindo segurança.
