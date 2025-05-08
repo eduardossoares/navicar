@@ -24,6 +24,7 @@ export default function CarouselCard({ images = [] }: CarouselCardProps) {
   };
   return (
     <motion.div
+    className="shadow-sm"
       initial={initial}
       animate={animate}
       transition={{ duration: 0.5, delay: 0.6 }}

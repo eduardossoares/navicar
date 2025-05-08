@@ -41,8 +41,6 @@ export default function DashboardSidebar() {
     signOut();
   };
 
-  console.log(user);
-
   const NavItems = () => (
     <div className="flex flex-col justify-between h-full">
       <div className="flex flex-col space-y-2 px-4">

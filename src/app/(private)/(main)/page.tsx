@@ -3,14 +3,10 @@ import { useAuth } from "@/hooks/useAuth";
 import { Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
 import VehicleCard from "@/components/vehicle-card";
-
 import { api } from "@/services/api";
 import { useEffect, useState } from "react";
-
 import { VehicleProps } from "@/@types/Vehicle";
-
 import VehicleFormModal from "@/components/vehicle-form-modal";
 
 export default function Home() {
@@ -61,8 +57,8 @@ export default function Home() {
 
       {user && (
         <Button
-          className="bg-blue-500 md:absolute md:right-4 md:top-4 w-full md:w-auto
-      transition-colors cursor-pointer duration-300 ease-in
+          className="bg-blue-500 md:absolute md:top-8 md:right-8 w-full md:w-auto
+      transition-colors cursor-pointer duration-300 ease-in rounded-sm
       hover:bg-blue-500/90"
           onClick={() => setIsModalOpened(true)}
         >

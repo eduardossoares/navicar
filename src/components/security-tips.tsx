@@ -14,7 +14,7 @@ export default function SecurityTips() {
   };
   return (
     <motion.div initial={initial} animate={animate} transition={{ duration: 0.5, delay: 0.7 }}>
-      <Card className="shadow-none rounded-md -space-y-4">
+      <Card className="rounded-md -space-y-4 shadow">
         <CardHeader>
           <CardTitle className="flex flex-row items-center gap-x-2">
             <Shield size={20} className="text-blue-500" />

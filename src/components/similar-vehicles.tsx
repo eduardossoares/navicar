@@ -30,14 +30,29 @@ export default function SimilarVehicles({ id }: SimilarVehiclesProps) {
     getVehicles();
   }, [id]);
 
+  const initial = {
+    opacity: 0,
+    x: -20,
+  };
+
+  const animate = {
+    opacity: 1,
+    x: 0,
+  };
+
   return (
     <>
       {vehicles && (
-        <motion.div className="w-full space-y-2">
+        <motion.div
+          initial={initial}
+          animate={animate}
+          transition={{ duration: 0.5, delay: 0.7 }}
+          className="w-full space-y-2"
+        >
           <h2 className="font-semibold text-zinc-700 text-lg">
             Veículos Similares
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {vehicles.map((vehicle) => (
               <VehicleCard
                 brand={vehicle.brand}

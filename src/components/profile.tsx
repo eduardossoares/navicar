@@ -19,7 +19,7 @@ export default function Profile() {
       animate={animate}
       transition={{ duration: 0.5, delay: 0.6 }}
     >
-      <Card className="shadow-none rounded-md">
+      <Card className="rounded-md shadow">
         <CardContent className="space-y-4">
           <div className="flex flex-row gap-x-4">
             <div className="h-8 w-8 p-6 rounded-full flex items-center justify-center bg-zinc-200">
@@ -40,7 +40,7 @@ export default function Profile() {
 
           <Button
             variant={"outline"}
-            className="w-full shadow-none h-10 cursor-pointer rounded-sm"
+            className="w-full h-10 cursor-pointer rounded-sm shadow"
           >
             <Info size={18} />
             <span>Ver Perfil do Vendedor</span>

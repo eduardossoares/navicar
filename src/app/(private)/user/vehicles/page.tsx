@@ -96,7 +96,6 @@ export default function Page() {
   };
 
   const handleTriggerUpdate = () => {
-    console.log(updateTrigger);
     setUpsdateTrigger(updateTrigger + 1);
   };
 
@@ -111,8 +110,8 @@ export default function Page() {
         </p>
       </div>
       <Button
-        className="bg-blue-500 md:absolute md:right-4 md:top-4 w-full md:w-auto
-      transition-colors cursor-pointer duration-300 ease-in
+        className="bg-blue-500 md:absolute md:right-8 md:top-8 w-full md:w-auto
+      transition-colors cursor-pointer duration-300 ease-in rounded-sm
       hover:bg-blue-500/90"
         onClick={() => setIsCreationModalOpened(true)}
       >

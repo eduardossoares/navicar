@@ -4,12 +4,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import logoBlack from "../../public/logo.svg";
-
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-
 import { Facebook, Linkedin, Twitter, Instagram } from "lucide-react";
-
 import LoginForm from "./login-form";
 import RegisterForm from "./register-form";
 

@@ -28,7 +28,7 @@ export default function FavoriteShare() {
     >
       <Button
         variant={"outline"}
-        className="cursor-pointer space-x-1.5 shadow-none rounded-sm"
+        className="cursor-pointer shadow space-x-1.5 rounded-sm"
         onClick={() => setFavorited(!favorited)}
       >
         {favorited ? <FaHeart className="text-red-500" /> : <Heart />}
@@ -36,7 +36,7 @@ export default function FavoriteShare() {
       </Button>
       <Button
         variant={"outline"}
-        className="cursor-pointer space-x-1 shadow-none rounded-sm"
+        className="cursor-pointer shadow space-x-1 rounded-sm"
       >
         <Share2 />
         <span>Compartilhar</span>

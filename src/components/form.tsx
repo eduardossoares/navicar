@@ -89,7 +89,7 @@ export default function Form({ type }: FormProps) {
               {...register("email")}
             />
             {errors && (
-              <p className="text-red-500 text-sm font-semibold">{errors.email?.message}</p>
+              <p className="text-red-500/80 text-sm">{errors.email?.message}</p>
             )}
           </div>
         </motion.div>
@@ -122,7 +122,7 @@ export default function Form({ type }: FormProps) {
               )}
             </Button>
             {errors && (
-              <p className="text-red-500 text-sm font-semibold">{errors.password?.message}</p>
+              <p className="text-red-500/80 text-sm">{errors.password?.message}</p>
             )}
           </div>
         </motion.div>
@@ -138,7 +138,7 @@ export default function Form({ type }: FormProps) {
         </motion.div>
 
         {showSignInError && (
-          <p className="text-red-500 text-sm text-center font-semibold">
+          <p className="text-red-500/80 text-sm text-center">
             Email ou senha inválidos.
           </p>
         )}

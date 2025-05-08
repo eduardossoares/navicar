@@ -74,7 +74,7 @@ export default function Contact({
       animate={animate}
       transition={{ duration: 0.5, delay: 0.6 }}
     >
-      <Card className="rounded-md bg-white shadow-none">
+      <Card className="rounded-md shadow bg-white">
         <CardHeader>
           <CardTitle className="text-3xl font-bold">
             {formatCurrency(price)}
@@ -94,7 +94,7 @@ export default function Contact({
 
           <div className="mt-3 space-y-2">
             <Button
-              className="bg-blue-500 w-full cursor-pointer hover:bg-blue-500/90 duration-100 ease-in py-5 rounded-sm"
+              className="bg-blue-500 w-full cursor-pointer hover:bg-blue-500/90 duration-100 ease-in py-5 rounded-sm shadow"
               onClick={handleCopy}
             >
               <Copy size={18} />
@@ -103,7 +103,7 @@ export default function Contact({
 
             <Button
               variant={"outline"}
-              className="shadow-none w-full cursor-pointer py-5 rounded-sm"
+              className="w-full cursor-pointer py-5 rounded-sm shadow"
             >
               <Link
                 href={`https://wa.me/+55${phone}`}

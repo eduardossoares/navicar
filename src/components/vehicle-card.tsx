@@ -52,7 +52,7 @@ export default function VehicleCard({
   };
 
   return (
-    <Card className="overflow-hidden p-0 shadow-none rounded-sm">
+    <Card className="overflow-hidden p-0 shadow rounded-sm">
       <div className={`relative w-full ${milage ? "h-48" : "h-28"}`}>
         <Image className="object-cover" src={images[0]} alt="Car" fill />
       </div>

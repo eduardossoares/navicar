@@ -73,6 +73,7 @@ export default function CarDescription({
       initial={initial}
       animate={animate}
       transition={{ duration: 0.5, delay: 0.7 }}
+      className=""
     >
       <Tabs
         defaultValue="details"
@@ -80,9 +81,9 @@ export default function CarDescription({
         onValueChange={setActiveTab}
         className="w-full"
       >
-        <TabsList className="grid w-full grid-cols-2 bg-zinc-100 rounded-sm h-10">
+        <TabsList className="grid w-full grid-cols-2 bg-zinc-100 rounded-sm h-12">
           <TabsTrigger
-            className={`cursor-pointer rounded-sm opacity-40 text-zinc-700 text-sm font-semibold ${
+            className={`cursor-pointer rounded-sm opacity-40 text-zinc-500 text-sm font-semibold ${
               activeTab === "details" && "bg-black opacity-100"
             }`}
             value="details"
@@ -90,7 +91,7 @@ export default function CarDescription({
             Detalhes
           </TabsTrigger>
           <TabsTrigger
-            className={`cursor-pointer rounded-sm opacity-40 text-zinc-700 text-sm font-semibold ${
+            className={`cursor-pointer rounded-sm opacity-40 text-zinc-500 text-sm font-semibold ${
               activeTab === "description" && "bg-black opacity-100"
             }`}
             value="description"
@@ -99,7 +100,7 @@ export default function CarDescription({
           </TabsTrigger>
         </TabsList>
         <TabsContent value="details">
-          <Card className="rounded-sm shadow-none">
+          <Card className="rounded-sm shadow">
             <CardContent>
               <div className="grid grid-cols-3 gap-2">
                 {details.map((detail) => (
