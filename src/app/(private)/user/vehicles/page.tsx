@@ -3,7 +3,7 @@
 import VehicleCard from "@/components/vehicle-card";
 import "../../../globals.css";
 import { Button } from "@/components/ui/button";
-import { Plus, Search } from "lucide-react";
+import { LoaderCircle, Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { VehicleProps } from "@/@types/Vehicle";
@@ -129,11 +129,15 @@ export default function Page() {
       </div>
 
       {isLoading ? (
-        <p className="text-zinc-400">Carregando veículos...</p>
+        <LoaderCircle
+          size={54}
+          className="animate-spin repeat-infinite absolute transform duration-
+        text-zinc-400/50 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 m-0 md:ml-42"
+        />
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {vehicles.length < 1 && (
-            <p className="text-zinc-400">Nenhum veículo cadastrado...</p>
+            <p className="text-zinc-400">Nenhum veículo anunciado...</p>
           )}
 
           {search.length > 0 &&

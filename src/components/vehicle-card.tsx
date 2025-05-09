@@ -86,10 +86,10 @@ export default function VehicleCard({
         {milage && !isCarOwner && (
           <Link
             href={`/vehicles/${id}`}
-            className="flex items-center justify-end text-blue-500 gap-x-1.5
+            className="flex items-center justify-end text-blue-500 gap-x-1.5 hover:underline
           cursor-pointer text-sm hover:text-blue-700 transition-colors duration-300"
           >
-            <span className="hover:underline">Veja mais detalhes</span>
+            <span>Veja mais detalhes</span>
             <ArrowRight size={16} />
           </Link>
         )}

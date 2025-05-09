@@ -1,6 +1,6 @@
 "use client";
 import { useAuth } from "@/hooks/useAuth";
-import { Plus, Search } from "lucide-react";
+import { Plus, Search, LoaderCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import VehicleCard from "@/components/vehicle-card";
@@ -45,7 +45,7 @@ export default function Home() {
   }, [search]);
 
   return (
-    <div className="p-4 md:p-8 w-full space-y-4 bg-zinc-100/60 md:pl-[340px]">
+    <div className="p-4 md:p-8 w-full space-y-4 bg-zinc-100/60 md:ml-[325px]">
       <div>
         <h1 className="text-xl md:text-2xl font-bold md:w-[60%]">
           Explore os melhores carros para você
@@ -71,13 +71,17 @@ export default function Home() {
         <Search className="absolute left-3 top-3 text-zinc-400" size={18} />
         <Input
           onChange={(e) => setSearch(e.target.value)}
-          className="pl-10 w-full placeholder:text-zinc-400 text-zinc-400 py-5"
+          className="pl-10 w-full placeholder:text-zinc-400 text-zinc-400 py-5 max-sm:text-sm"
           placeholder="Atrás de algum veículo em específico?"
         />
       </div>
 
       {isLoading ? (
-        <p className="text-zinc-400">Carregando veículos...</p>
+        <LoaderCircle
+          size={54}
+          className="animate-spin repeat-infinite absolute transform duration-
+        text-zinc-400/40 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 m-0 md:ml-42"
+        />
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {search.length > 0 &&

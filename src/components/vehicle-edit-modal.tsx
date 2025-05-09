@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { useState, useEffect } from "react";
 import z from "zod";
@@ -17,7 +18,7 @@ import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { api } from "@/services/api";
 import { toast } from "sonner";
-import { VehicleProps } from "@/@types/Vehicle";
+import { LoaderCircle } from "lucide-react";
 
 type vehicleEditModalProps = {
   isOpen: boolean;
@@ -57,6 +58,7 @@ export default function VehicleEditModal({
   const [city, setCity] = useState<string>("");
   const [brand, setBrand] = useState<string>("");
   const [model, setModel] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getVehicle = async () => {
@@ -115,6 +117,7 @@ export default function VehicleEditModal({
 
   const handleUpdateVehicle = async (data: FormData) => {
     try {
+      setIsLoading(true);
       await api.put(`/ads/${userId}/${vehicleIdToUpdate}`, {
         price: data.price,
         year: data.year,
@@ -138,233 +141,255 @@ export default function VehicleEditModal({
       });
     } catch (error) {
       console.log(`Erro ao atualizar veículo: ${error}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={handleCloseModal}>
-      <DialogContent>
+      <DialogContent
+        className={cn(
+          "sm:max-w-[500px] max-h-[90vh] overflow-y-auto",
+          isLoading && "sm:max-w-[300px] py-8"
+        )}
+      >
         <DialogHeader>
-          <DialogTitle>Editar Veículo</DialogTitle>
+          <DialogTitle className={cn(isLoading && "animate-pulse text-center")}>
+            {isLoading ? "Veículo sendo editado..." : "Editar veículo"}
+          </DialogTitle>
+          <DialogDescription
+            className={cn(isLoading && "animate-pulse text-center")}
+          >
+            {isLoading
+              ? "Aguarde um instante..."
+              : "Preencha os campos abaixo para editar o veículo."}
+          </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(handleUpdateVehicle)}>
-          <div className="grid gap-4">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-y-1">
-                <Label
-                  className={cn(
-                    "text-sm font-medium",
-                    errors?.brand ? "text-red-500" : "text-black"
-                  )}
-                >
-                  <span>Marca*</span>
-                  {errors?.brand && (
-                    <span className="text-xs font-light">(obrigatório)</span>
-                  )}
-                </Label>
-                <Input
-                  {...register("brand")}
-                  value={brand}
-                  onChange={(e) => setBrand(e.target.value)}
-                  className="rounded-sm shadow-none max-sm:text-sm"
-                  placeholder="Ex: Toyota"
-                />
-              </div>
-              <div className="flex flex-col gap-y-1">
-                <Label
-                  className={cn(
-                    "text-sm font-medium",
-                    errors?.model ? "text-red-500" : "text-black"
-                  )}
-                >
-                  <span>Modelo*</span>
-                  {errors?.model && (
-                    <span className="text-xs font-light">(obrigatório)</span>
-                  )}
-                </Label>
-                <Input
-                  {...register("model")}
-                  value={model}
-                  onChange={(e) => setModel(e.target.value)}
-                  className="rounded-sm shadow-none max-sm:text-sm"
-                  placeholder="Ex: Corolla"
-                />
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-y-1">
-                <Label
-                  className={cn(
-                    "text-sm font-medium",
-                    errors?.year ? "text-red-500" : "text-black"
-                  )}
-                >
-                  <span>Ano*</span>
-                  {errors?.year && (
-                    <span className="text-xs font-light">(obrigatório)</span>
-                  )}
-                </Label>
-                <Input
-                  type="number"
-                  {...register("year")}
-                  value={year}
-                  onChange={(e) => setYear(e.target.value)}
-                  min={1900}
-                  className="rounded-sm shadow-none max-sm:text-sm"
-                  placeholder="Ex: 2022"
-                />
-              </div>
-              <div className="flex flex-col gap-y-1">
-                <Label
-                  className={cn(
-                    "text-sm font-medium",
-                    errors?.color ? "text-red-500" : "text-black"
-                  )}
-                >
-                  <span>Cor*</span>
-                  {errors?.color && (
-                    <span className="text-xs font-light">(obrigatório)</span>
-                  )}
-                </Label>
-                <Input
-                  {...register("color")}
-                  value={color}
-                  onChange={(e) => setColor(e.target.value)}
-                  className="rounded-sm shadow-none max-sm:text-sm"
-                  placeholder="Ex: Vermelho"
-                />
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-y-1">
-                <Label
-                  className={cn(
-                    "text-sm font-medium",
-                    errors?.milage ? "text-red-500" : "text-black"
-                  )}
-                >
-                  <span>Quilometragem*</span>
-                  {errors?.milage && (
-                    <span className="text-xs font-light">(obrigatório)</span>
-                  )}
-                </Label>
-                <Input
-                  type="number"
-                  {...register("milage")}
-                  value={milage}
-                  onChange={(e) => setMilage(e.target.value)}
-                  min={1}
-                  className="rounded-sm shadow-none max-sm:text-sm"
-                  placeholder="Ex: 15000"
-                />
-              </div>
-              <div className="flex flex-col gap-y-1">
-                <Label
-                  className={cn(
-                    "text-sm font-medium",
-                    errors?.city ? "text-red-500" : "text-black"
-                  )}
-                >
-                  <span>Localização*</span>
-                  {errors?.city && (
-                    <span className="text-xs font-light">(obrigatório)</span>
-                  )}
-                </Label>
-                <Input
-                  {...register("city")}
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                  className="rounded-sm shadow-none max-sm:text-sm"
-                  placeholder="Ex: Eldorado do Sul - RS"
-                />
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-y-1">
-                <Label
-                  className={cn(
-                    "text-sm font-medium",
-                    errors?.phone ? "text-red-500" : "text-black"
-                  )}
-                >
-                  <span>Telefone*</span>
-                  {errors?.phone && (
-                    <span className="text-xs font-light">(obrigatório)</span>
-                  )}
-                </Label>
-                <Input
-                  {...register("phone")}
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="rounded-sm shadow-none max-sm:text-sm"
-                  placeholder="Ex: 5412345678"
-                />
-              </div>
-              <div className="flex flex-col gap-y-1">
-                <Label
-                  className={cn(
-                    "text-sm font-medium",
-                    errors?.price ? "text-red-500" : "text-black"
-                  )}
-                >
-                  <span>Preço*</span>
-                  {errors?.price && (
-                    <span className="text-xs font-light">(obrigatório)</span>
-                  )}
-                </Label>
-                <Input
-                  type="number"
-                  {...register("price")}
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  min={1}
-                  className="rounded-sm shadow-none max-sm:text-sm"
-                  placeholder="Ex: 150000"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-y-1">
-              <Label
-                className={cn(
-                  "text-sm font-medium",
-                  errors?.description ? "text-red-500" : "text-black"
-                )}
-              >
-                <span>Descrição do Veículo*</span>
-                {errors?.description && (
-                  <span className="text-xs font-light">(obrigatório)</span>
-                )}
-              </Label>
-              <Textarea
-                {...register("description")}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Ex: Carro bom para passeios e muito confortável..."
-                className="h-24 resize-none text-sm shadow-none rounded-sm"
-              />
-            </div>
-
-            <div className="flex justify-end gap-x-2">
-              <Button
-                variant={"outline"}
-                className="rounded-sm cursor-pointer"
-                onClick={handleCloseModal}
-              >
-                Cancelar
-              </Button>
-              <Button
-                type="submit"
-                className="rounded-sm bg-blue-500 hover:bg-blue-500/90 cursor-pointer duration-100"
-              >
-                Editar
-              </Button>
-            </div>
+        {isLoading ? (
+          <div className="w-full flex justify-center items-center">
+            <LoaderCircle size={28} className="animate-spin text-zinc-400/50" />
           </div>
-        </form>
+        ) : (
+          <form onSubmit={handleSubmit(handleUpdateVehicle)}>
+            <div className="grid gap-4">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-y-1">
+                  <Label
+                    className={cn(
+                      "text-sm font-medium",
+                      errors?.brand ? "text-red-500" : "text-black"
+                    )}
+                  >
+                    <span>Marca*</span>
+                    {errors?.brand && (
+                      <span className="text-xs font-light">(obrigatório)</span>
+                    )}
+                  </Label>
+                  <Input
+                    {...register("brand")}
+                    value={brand}
+                    onChange={(e) => setBrand(e.target.value)}
+                    className="rounded-sm shadow-none max-sm:text-sm"
+                    placeholder="Ex: Toyota"
+                  />
+                </div>
+                <div className="flex flex-col gap-y-1">
+                  <Label
+                    className={cn(
+                      "text-sm font-medium",
+                      errors?.model ? "text-red-500" : "text-black"
+                    )}
+                  >
+                    <span>Modelo*</span>
+                    {errors?.model && (
+                      <span className="text-xs font-light">(obrigatório)</span>
+                    )}
+                  </Label>
+                  <Input
+                    {...register("model")}
+                    value={model}
+                    onChange={(e) => setModel(e.target.value)}
+                    className="rounded-sm shadow-none max-sm:text-sm"
+                    placeholder="Ex: Corolla"
+                  />
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-y-1">
+                  <Label
+                    className={cn(
+                      "text-sm font-medium",
+                      errors?.year ? "text-red-500" : "text-black"
+                    )}
+                  >
+                    <span>Ano*</span>
+                    {errors?.year && (
+                      <span className="text-xs font-light">(obrigatório)</span>
+                    )}
+                  </Label>
+                  <Input
+                    type="number"
+                    {...register("year")}
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                    min={1900}
+                    className="rounded-sm shadow-none max-sm:text-sm"
+                    placeholder="Ex: 2022"
+                  />
+                </div>
+                <div className="flex flex-col gap-y-1">
+                  <Label
+                    className={cn(
+                      "text-sm font-medium",
+                      errors?.color ? "text-red-500" : "text-black"
+                    )}
+                  >
+                    <span>Cor*</span>
+                    {errors?.color && (
+                      <span className="text-xs font-light">(obrigatório)</span>
+                    )}
+                  </Label>
+                  <Input
+                    {...register("color")}
+                    value={color}
+                    onChange={(e) => setColor(e.target.value)}
+                    className="rounded-sm shadow-none max-sm:text-sm"
+                    placeholder="Ex: Vermelho"
+                  />
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-y-1">
+                  <Label
+                    className={cn(
+                      "text-sm font-medium",
+                      errors?.milage ? "text-red-500" : "text-black"
+                    )}
+                  >
+                    <span>Quilometragem*</span>
+                    {errors?.milage && (
+                      <span className="text-xs font-light">(obrigatório)</span>
+                    )}
+                  </Label>
+                  <Input
+                    type="number"
+                    {...register("milage")}
+                    value={milage}
+                    onChange={(e) => setMilage(e.target.value)}
+                    min={1}
+                    className="rounded-sm shadow-none max-sm:text-sm"
+                    placeholder="Ex: 15000"
+                  />
+                </div>
+                <div className="flex flex-col gap-y-1">
+                  <Label
+                    className={cn(
+                      "text-sm font-medium",
+                      errors?.city ? "text-red-500" : "text-black"
+                    )}
+                  >
+                    <span>Localização*</span>
+                    {errors?.city && (
+                      <span className="text-xs font-light">(obrigatório)</span>
+                    )}
+                  </Label>
+                  <Input
+                    {...register("city")}
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className="rounded-sm shadow-none max-sm:text-sm"
+                    placeholder="Ex: Eldorado do Sul - RS"
+                  />
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-y-1">
+                  <Label
+                    className={cn(
+                      "text-sm font-medium",
+                      errors?.phone ? "text-red-500" : "text-black"
+                    )}
+                  >
+                    <span>Telefone*</span>
+                    {errors?.phone && (
+                      <span className="text-xs font-light">(obrigatório)</span>
+                    )}
+                  </Label>
+                  <Input
+                    {...register("phone")}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="rounded-sm shadow-none max-sm:text-sm"
+                    placeholder="Ex: 5412345678"
+                  />
+                </div>
+                <div className="flex flex-col gap-y-1">
+                  <Label
+                    className={cn(
+                      "text-sm font-medium",
+                      errors?.price ? "text-red-500" : "text-black"
+                    )}
+                  >
+                    <span>Preço*</span>
+                    {errors?.price && (
+                      <span className="text-xs font-light">(obrigatório)</span>
+                    )}
+                  </Label>
+                  <Input
+                    type="number"
+                    {...register("price")}
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    min={1}
+                    className="rounded-sm shadow-none max-sm:text-sm"
+                    placeholder="Ex: 150000"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-y-1">
+                <Label
+                  className={cn(
+                    "text-sm font-medium",
+                    errors?.description ? "text-red-500" : "text-black"
+                  )}
+                >
+                  <span>Descrição do Veículo*</span>
+                  {errors?.description && (
+                    <span className="text-xs font-light">(obrigatório)</span>
+                  )}
+                </Label>
+                <Textarea
+                  {...register("description")}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Ex: Carro bom para passeios e muito confortável..."
+                  className="h-24 resize-none text-sm shadow-none rounded-sm"
+                />
+              </div>
+
+              <div className="flex justify-end gap-x-2">
+                <Button
+                  variant={"outline"}
+                  className="rounded-sm cursor-pointer"
+                  onClick={handleCloseModal}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  type="submit"
+                  className="rounded-sm bg-blue-500 hover:bg-blue-500/90 cursor-pointer duration-100"
+                >
+                  Editar
+                </Button>
+              </div>
+            </div>
+          </form>
+        )}
       </DialogContent>
     </Dialog>
   );
