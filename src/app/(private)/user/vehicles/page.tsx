@@ -5,7 +5,7 @@ import "../../../globals.css";
 import { Button } from "@/components/ui/button";
 import { LoaderCircle, Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { VehicleProps } from "@/@types/Vehicle";
 import { api } from "@/services/api";
 import { useAuth } from "@/hooks/useAuth";
@@ -32,8 +32,9 @@ export default function Page() {
   const [vehicleIdToDelete, setVehicleIdToDelete] = useState<string>("");
   const [vehicleIdToUpdate, setVehicleIdToUpdate] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
-  const [updateTrigger, setUpsdateTrigger] = useState(0);
   const [isCreationModalOpened, setIsCreationModalOpened] = useState(false);
+
+  const vehicleIdToDeleteRef = useRef<string>("");
 
   const { user } = useAuth();
 
@@ -53,7 +54,7 @@ export default function Page() {
       }
     };
     getVehicles();
-  }, [vehicleIdToDelete, user?.id, updateTrigger]);
+  }, [user?.id, vehicleIdToDelete]);
 
   useEffect(() => {
     const getFilteredVehicles = () => {
@@ -65,11 +66,11 @@ export default function Page() {
       setFilteredVehicles(filtered);
     };
     getFilteredVehicles();
-  }, [search, user?.id, updateTrigger, vehicles]);
+  }, [search]);
 
   const openDeleteDialog = (vehicleId: string) => {
     setIsDialogDeleteOpened(true);
-    setVehicleIdToDelete(vehicleId);
+    vehicleIdToDeleteRef.current = vehicleId;
   };
 
   const openEditVehicleModal = (vehicleId: string) => {
@@ -77,11 +78,27 @@ export default function Page() {
     setVehicleIdToUpdate(vehicleId);
   };
 
+  const updateVehicleLocally = (updatedVehicle: VehicleProps) => {
+    setVehicles((prev) => {
+      const newVehicles = prev.map((vehicle) =>
+        vehicle.id === updatedVehicle.id ? updatedVehicle : vehicle
+      );
+      console.log(newVehicles);
+      return newVehicles;
+    });
+  };
+
   const handleDelete = async () => {
     try {
-      await api.delete(`/ads/${user?.id}/${vehicleIdToDelete}`);
-      setIsDialogDeleteOpened(false);
-      setVehicleIdToDelete("");
+      const id = vehicleIdToDeleteRef.current;
+      const response = await api.delete(`/ads/${user?.id}/${id}`);
+      const removedVehicle: VehicleProps = response.data;
+      setVehicles((prev) => {
+        const newVehicles = prev.filter(
+          (vehicle) => vehicle.id !== removedVehicle.id
+        );
+        return newVehicles;
+      });
       toast.success("Veículo deletado com sucesso.", {
         style: {
           backgroundColor: "#22C55E",
@@ -90,13 +107,11 @@ export default function Page() {
         position: "top-right",
         duration: 2000,
       });
+      setIsDialogDeleteOpened(false);
+      vehicleIdToDeleteRef.current = "";
     } catch (error) {
       console.log(`Erro ao deletar veículo: ${error}`);
     }
-  };
-
-  const handleTriggerUpdate = () => {
-    setUpsdateTrigger(updateTrigger + 1);
   };
 
   return (
@@ -227,7 +242,7 @@ export default function Page() {
           userId={user?.id || ""}
           isOpen={isEditModalOpened}
           onClose={() => setIsEditModalOpened(false)}
-          onUpdate={handleTriggerUpdate}
+          onUpdate={updateVehicleLocally}
         />
       )}
 

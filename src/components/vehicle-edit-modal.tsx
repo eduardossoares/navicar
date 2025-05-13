@@ -19,13 +19,14 @@ import { Button } from "./ui/button";
 import { api } from "@/services/api";
 import { toast } from "sonner";
 import { LoaderCircle } from "lucide-react";
+import { VehicleProps } from "@/@types/Vehicle";
 
 type vehicleEditModalProps = {
   isOpen: boolean;
   onClose: () => void;
   vehicleIdToUpdate: string;
   userId: string;
-  onUpdate?: () => void;
+  onUpdate: (vehicle: VehicleProps) => void;
 };
 
 const schema = z.object({
@@ -118,7 +119,7 @@ export default function VehicleEditModal({
   const handleUpdateVehicle = async (data: FormData) => {
     try {
       setIsLoading(true);
-      await api.put(`/ads/${userId}/${vehicleIdToUpdate}`, {
+      const response = await api.put(`/ads/${userId}/${vehicleIdToUpdate}`, {
         price: data.price,
         year: data.year,
         milage: data.milage,
@@ -129,8 +130,10 @@ export default function VehicleEditModal({
         phone: data.phone,
         description: data.description,
       });
+      const updatedVehicle: VehicleProps = response.data;
+      console.log(updatedVehicle);
+      onUpdate(updatedVehicle);
       handleCloseModal();
-      onUpdate?.();
       toast.success("Veículo atualizado com sucesso.", {
         style: {
           backgroundColor: "#22C55E",
