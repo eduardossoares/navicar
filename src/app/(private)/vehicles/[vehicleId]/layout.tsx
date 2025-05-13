@@ -11,12 +11,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Navicar | Página de Veículo",
+  title: "Navicar | Página de veículo",
   description:
     "Confira os detalhes do veículo selecionado. Veja preço, fotos e entre em contato com o vendedor no Navicar.",
   robots: "index, follow",
   openGraph: {
-    title: "Navicar | Página de Veículo",
+    title: "Navicar | Página de veículo",
     description: "Gerencie seus anúncios com facilidade no Navicar.",
     siteName: "Navicar",
   },
