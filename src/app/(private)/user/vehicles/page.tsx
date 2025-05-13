@@ -29,7 +29,6 @@ export default function Page() {
   const [search, setSearch] = useState("");
   const [isDialogDeleteOpened, setIsDialogDeleteOpened] = useState(false);
   const [isEditModalOpened, setIsEditModalOpened] = useState(false);
-  const [vehicleIdToDelete, setVehicleIdToDelete] = useState<string>("");
   const [vehicleIdToUpdate, setVehicleIdToUpdate] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [isCreationModalOpened, setIsCreationModalOpened] = useState(false);
@@ -54,7 +53,7 @@ export default function Page() {
       }
     };
     getVehicles();
-  }, [user?.id, vehicleIdToDelete]);
+  }, [user?.id, vehicleIdToDeleteRef.current]);
 
   useEffect(() => {
     const getFilteredVehicles = () => {
