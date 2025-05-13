@@ -34,6 +34,7 @@ export default function Page() {
   const [isCreationModalOpened, setIsCreationModalOpened] = useState(false);
 
   const vehicleIdToDeleteRef = useRef<string>("");
+  const vehicleCreatedTrigger = useRef<number>(0);
 
   const { user } = useAuth();
 
@@ -53,7 +54,7 @@ export default function Page() {
       }
     };
     getVehicles();
-  }, [user?.id, vehicleIdToDeleteRef.current]);
+  }, [user?.id, vehicleIdToDeleteRef.current, vehicleCreatedTrigger.current]);
 
   useEffect(() => {
     const getFilteredVehicles = () => {
@@ -113,8 +114,12 @@ export default function Page() {
     }
   };
 
+  const handleCreateVehicle = () => {
+    vehicleCreatedTrigger.current++;
+  };
+
   return (
-    <div className="p-4 md:p-8 w-full space-y-4 md:pl-[340px]">
+    <div className="p-4 md:p-8 w-full space-y-4 md:ml-[320px]">
       <div>
         <h1 className="text-xl md:text-2xl font-bold md:w-[60%]">
           Seus anúncios
@@ -245,7 +250,9 @@ export default function Page() {
         />
       )}
 
+      {/* Modal de criação */}
       <VehicleFormModal
+        vehicleCreatedTrigger={handleCreateVehicle}
         isOpen={isCreationModalOpened}
         onClose={() => setIsCreationModalOpened(false)}
       />

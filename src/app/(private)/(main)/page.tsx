@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import VehicleCard from "@/components/vehicle-card";
 import { api } from "@/services/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { VehicleProps } from "@/@types/Vehicle";
 import VehicleFormModal from "@/components/vehicle-form-modal";
 
@@ -16,6 +16,8 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const vehicleCreatedTrigger = useRef<number>(0);
 
   useEffect(() => {
     const getVehicles = async () => {
@@ -30,7 +32,7 @@ export default function Home() {
       }
     };
     getVehicles();
-  }, []);
+  }, [user?.id, vehicleCreatedTrigger.current]);
 
   useEffect(() => {
     const getFilteredVehicles = () => {
@@ -44,8 +46,12 @@ export default function Home() {
     getFilteredVehicles();
   }, [search]);
 
+  const handleVehicleCreated = () => {
+    vehicleCreatedTrigger.current++;
+  };
+
   return (
-    <div className="p-4 md:p-8 w-full space-y-4 bg-zinc-100/60 md:ml-[325px]">
+    <div className="p-4 md:p-8 w-full space-y-4 bg-zinc-100/60 md:ml-[320px]">
       <div>
         <h1 className="text-xl md:text-2xl font-bold md:w-[60%]">
           Explore os melhores carros para você
@@ -131,6 +137,7 @@ export default function Home() {
       )}
 
       <VehicleFormModal
+        vehicleCreatedTrigger={handleVehicleCreated}
         isOpen={isModalOpened}
         onClose={() => setIsModalOpened(false)}
       />

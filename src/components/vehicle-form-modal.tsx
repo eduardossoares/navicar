@@ -39,6 +39,7 @@ export type VehicleFormModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onSubmit?: () => void;
+  vehicleCreatedTrigger: () => void;
 };
 
 type FormData = z.infer<typeof schema>;
@@ -46,6 +47,7 @@ type FormData = z.infer<typeof schema>;
 export default function VehicleFormModal({
   isOpen,
   onClose,
+  vehicleCreatedTrigger,
 }: VehicleFormModalProps) {
   const [images, setImages] = useState<File[]>([]);
   const [imagesPreview, setImagesPreview] = useState<string[]>([]);
@@ -129,7 +131,6 @@ export default function VehicleFormModal({
     try {
       setIsLoading(true);
       await api.post("/ads", formData);
-      handleCloseModal();
       toast.success("Veículo anunciado com sucesso.", {
         style: {
           backgroundColor: "#22C55E",
@@ -138,6 +139,8 @@ export default function VehicleFormModal({
         position: "top-right",
         duration: 2000,
       });
+      vehicleCreatedTrigger();
+      handleCloseModal();
     } catch (error) {
       console.log(`Erro ao criar veículo: ${error}`);
     } finally {
@@ -154,13 +157,21 @@ export default function VehicleFormModal({
         )}
       >
         <DialogHeader>
-          <DialogTitle className={cn("text-start", isLoading && "text-center animate-pulse")}>
+          <DialogTitle
+            className={cn(
+              "text-start",
+              isLoading && "text-center animate-pulse"
+            )}
+          >
             {isLoading
               ? "Seu veículo está sendo anunciado!"
               : "Anuncie seu veículo"}
           </DialogTitle>
           <DialogDescription
-            className={cn("text-start", isLoading && "text-center animate-pulse")}
+            className={cn(
+              "text-start",
+              isLoading && "text-center animate-pulse"
+            )}
           >
             {isLoading
               ? "Aguarde alguns instantes..."
